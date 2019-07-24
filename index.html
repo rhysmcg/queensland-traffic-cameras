@@ -1,0 +1,89 @@
+<!-- 
+Based from this sample: 
+https://developers.google.com/fusiontables/docs/samples/custom_markers 
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="UTF-8">
+		<title>Queensland Traffic Map</title>
+
+		<style>
+		  /* Always set the map height explicitly to define the size of the div
+		   * element that contains the map. */
+		  #map {
+			height: 100%;
+		  }
+		  /* Optional: Makes the sample page fill the window. */
+		  html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		  }
+		  </style>
+  </head>
+  <body>
+    <div id="map"></div>
+	<script src="qld-live-traffic-cameras.js"></script>
+    <script>
+      function initMap() {
+
+
+		// Setup the map
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 5,
+          center: {lat: -24.283320, lng: 149.217682},
+		  mapTypeId: google.maps.MapTypeId.ROADMAP,
+		  styles: Pale_Dawn
+        });
+
+		var infoWin = new google.maps.InfoWindow({maxWidth: 190});
+        var markers = camera_list.map(function(location, i) {
+           var marker = new google.maps.Marker({
+            position: {lat: location['lat'], lng: location['lon']},
+			icon: new google.maps.MarkerImage('Icons/' + location.cameraType + '.png')
+          });
+		  
+		  var markercontent = ''
+		  
+		  // For Traffic Cameras, show the live capture
+		  // For Other Cameras, a streetview of the lat/lon
+		  if (location.cameraType == 'traffic')
+		  {
+			markercontent = (
+			// Image
+			'<div><img src=' + location.Image + 
+			' style="width: 190px; height: 152px; vertical-align: top"/></div><br />' +
+			location.location);
+		  }
+		  else
+		  {
+			// pre-load 
+			markercontent = (
+			// StreetView Image
+			'<div id=\"infoDiv\"><center><img src="http://maps.googleapis.com/maps/api/streetview?size=190x152&location=' + location.lat + ',' + location.lon + '&fov=120&sensor=false"/></center></div><br />' +
+			// Location
+			location.location);// + ', ' + cameraReg)
+		  }
+		  
+		  google.maps.event.addListener(marker, 'click', function(evt) {
+			infoWin.setContent(markercontent);
+			infoWin.open(map, marker);
+		  })
+		  return marker;
+		  })
+		 	
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {
+			imagePath: 'Icons/m',
+			gridSize: 12
+			});
+      }
+    </script>
+    <script src="markerclusterer.js"></script>
+	<script src="themes.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTOeALqHbGpPwVOtnQxpDIW2p6wUJa39I&callback=initMap"></script>
+  </body>
+</html>
