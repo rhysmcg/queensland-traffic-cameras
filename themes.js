@@ -1,22 +1,3 @@
-themes.js
-Type
-Javascript
-Size
-5 KB (4,829 bytes)
-Storage used
-5 KB (4,829 bytes)
-Location
-Queensland Live Traffic Cameras
-Owner
-me
-Modified
-18 Jan 2018 by me
-Opened
-18 Jan 2018 by me
-Created
-18 Jan 2018 with Google Drive Web
-Add a description
-Viewers can download
 var simplified = [[
   {
     "stylers": [

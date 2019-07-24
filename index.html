@@ -62,10 +62,11 @@ https://developers.google.com/fusiontables/docs/samples/custom_markers
 			// pre-load 
 			markercontent = (
 			// StreetView Image
-			'<div id=\"infoDiv\"><center><img src="http://maps.googleapis.com/maps/api/streetview?size=190x152&location=' + location.lat + ',' + location.lon + '&fov=120&sensor=false"/></center></div><br />' +
+			'<div id=\"infoDiv\"><center><img src="http://maps.googleapis.com/maps/api/streetview?size=190x152&location=' + location.lat + ',' + location.lon + '&fov=90&heading=235&pitch=10&key=AIzaSyBTOeALqHbGpPwVOtnQxpDIW2p6wUJa39I"/></center></div><br />' +
 			// Location
 			location.location);// + ', ' + cameraReg)
 		  }
+		  
 		  
 		  google.maps.event.addListener(marker, 'click', function(evt) {
 			infoWin.setContent(markercontent);
